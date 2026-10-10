@@ -113,6 +113,6 @@ Provide at least six specific test cases covering key pathways, device, channel,
 # Appendix {.unnumbered}
 
 - [GitHub Repository](https://github.com/hanamai111/ga4-analytics-blueprint-phd-orthodontics)
-- **GitHub Pages Report:** Publication pending; verified live link will be inserted after deployment.
+- [GitHub Pages Report](https://hanamai111.github.io/ga4-analytics-blueprint-phd-orthodontics/)
 
 <!-- Member 1: verify both publication links, consistency, diagram/resources, and final HTML before team-approved submission. Do not submit this skeleton. -->
