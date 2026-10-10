@@ -1,0 +1,13 @@
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.quarto/
+*_cache/
+.DS_Store
+.env
+.env.*
+
+
+/.quarto/
+**/*.quarto_ipynb

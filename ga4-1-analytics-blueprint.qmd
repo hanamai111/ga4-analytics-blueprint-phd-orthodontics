@@ -1,0 +1,118 @@
+---
+title: "GA4-1: GP Analytics Blueprint"
+subtitle: "PhD Orthodontics - Group 6"
+author: "Group 6"
+date: today
+format:
+  html:
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 3
+    number-sections: true
+    smooth-scroll: true
+    embed-resources: true
+    code-fold: true
+    code-tools: true
+editor: visual
+---
+
+::: {.callout-note}
+## Initial team setup
+This report is a working skeleton. Members 2-5 own their assigned deliverables; final content and validation results are pending.
+
+Client: PhD Orthodontics | Team: Group 6 | Course: IBM 6500
+:::
+
+# Analytics Blueprint
+
+> **Member 2 section - Analytics Blueprint (pending)**
+
+Temporary checklist (target: 1-2 pages):
+
+- Brief client context: business model and primary goals.
+- 3-6 decision-oriented stakeholder questions.
+- KPI(s) for each question; exact plain-English metric definitions and formulas where useful.
+- Breakdown dimensions/cuts: channel, campaign, landing page, device, geography as relevant.
+- Data source for each KPI and assumptions or unavailable data.
+
+**Quality bar:** Someone outside the team should be able to compute each KPI exactly as intended.
+
+<!-- Member 2: replace this guidance with your deliverable. Confirm definitions with the team/client. -->
+
+# KPI Tree / Metric Hierarchy
+
+> **Member 3 section - KPI Tree (pending)**
+
+Temporary checklist (target: 1 page):
+
+- 1 North Star outcome.
+- 2-4 driver branches, with 2-4 metrics per branch.
+- Diagnostic cuts and a final diagram inserted here.
+
+**Working proposal, not a verified client fact:** Qualified Consultation Leads is the proposed North Star. Its exact definition and data availability require confirmation. Consultation Inquiries may serve as an initial measurable proxy if qualified lead information is unavailable.
+
+Working driver framework: Acquisition; Engagement; Conversion Funnel; Lead Quality. Align the diagram with Member 2's confirmed KPI definitions.
+
+<!-- Member 3: insert final diagram and explanatory notes here. -->
+
+# Event / Parameter Map
+
+> **Member 4 section - Event / Parameter Map (pending)**
+
+Use GA4 recommended events when appropriate. Keep event and parameter names consistent across pages and funnels. Document duplicates, consent impact, embedded forms, and cross-domain issues where relevant (target: 1-2 pages).
+
+| KPI / Question Supported | Event Name | Trigger Definition | Required Parameters | Notes / Edge Cases |
+|--------------------------|------------|--------------------|---------------------|--------------------|
+| Pending Member 4 | - | - | - | - |
+
+<!-- Member 4: replace the placeholder row and add rows as needed. -->
+
+# Validation Checklist + Test Cases
+
+> **Member 5 section - Validation Checklist + Test Cases (pending)**
+
+Target: 1 page. Describe executable checks; do not label planned checks as completed.
+
+## GTM / Collection Checks
+
+<!-- Member 5: Preview mode, triggers, duplicate events. -->
+
+*Checklist pending.*
+
+## GA4 DebugView / Realtime Checks
+
+<!-- Member 5: events visible and required parameters populated. -->
+
+*Checklist pending.*
+
+## Reporting Sanity Checks
+
+<!-- Member 5: source/medium/campaign and page dimensions populate correctly. -->
+
+*Checklist pending.*
+
+## BigQuery Export Checks
+
+<!-- Member 5: if enabled, events in events_* and parameters extract correctly; document availability. -->
+
+*Checklist pending; export availability must be confirmed.*
+
+## Test Cases
+
+Provide at least six specific test cases covering key pathways, device, channel, and conversion. Rows below reserve space only; no tests have been performed.
+
+| Test Case | Steps to Perform | Expected Event(s) | Expected Parameters / Dimensions | Result / Notes |
+|-----------|------------------|-------------------|----------------------------------|----------------|
+| 1 - Pending | - | - | - | Not designed or run |
+| 2 - Pending | - | - | - | Not designed or run |
+| 3 - Pending | - | - | - | Not designed or run |
+| 4 - Pending | - | - | - | Not designed or run |
+| 5 - Pending | - | - | - | Not designed or run |
+| 6 - Pending | - | - | - | Not designed or run |
+
+# Appendix {.unnumbered}
+
+- [GitHub Repository](https://github.com/hanamai111/ga4-analytics-blueprint-phd-orthodontics)
+- **GitHub Pages Report:** Publication pending; verified live link will be inserted after deployment.
+
+<!-- Member 1: verify both publication links, consistency, diagram/resources, and final HTML before team-approved submission. Do not submit this skeleton. -->
