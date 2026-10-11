@@ -30,21 +30,49 @@ Temporary checklist (target: 1-2 pages):
 
 <!-- Member 2: replace this guidance with your deliverable. Confirm definitions with the team/client. -->
 
-# KPI Tree / Metric Hierarchy
+# KPI Tree / Metric Hierarchy (Willy Su)
 
-> **Member 3 section - KPI Tree (pending)**
+**Member 3 — KPI Tree**
 
-Temporary checklist (target: 1 page):
+The proposed North Star KPI is **Qualified Consultation Leads**: consultation inquiries that meet the practice's agreed qualification criteria. Because these criteria and the availability of lead-status data have not yet been confirmed, **Consultation Inquiries** (successfully submitted consultation requests) are the interim measurable proxy. This is a proposed measurement framework, not a claim about current client performance.
 
--   1 North Star outcome.
--   2-4 driver branches, with 2-4 metrics per branch.
--   Diagnostic cuts and a final diagram inserted here.
+```{mermaid}
+flowchart TB
+    NS["North Star: Qualified Consultation Leads<br/>(interim proxy: Consultation Inquiries)"]
+    A["Acquisition"]
+    E["Engagement"]
+    C["Conversion Funnel"]
+    Q["Lead Quality"]
+    NS --- A
+    NS --- E
+    NS --- C
+    NS --- Q
+    A --> A1["Users"]
+    A --> A2["Sessions"]
+    A --> A3["Organic Search Sessions"]
+    E --> E1["Engaged Sessions"]
+    E --> E2["Service Page Views"]
+    E --> E3["Consultation CTA Clicks"]
+    C --> C1["Consultation Form Starts"]
+    C --> C2["Successful Form Submissions"]
+    C --> C3["Form Completion Rate"]
+    Q --> Q1["Inquiries in Service Area"]
+    Q --> Q2["Inquiries by Service Interest"]
+    Q --> Q3["Validated / Qualified Inquiries"]
+```
 
-**Working proposal, not a verified client fact:** Qualified Consultation Leads is the proposed North Star. Its exact definition and data availability require confirmation. Consultation Inquiries may serve as an initial measurable proxy if qualified lead information is unavailable.
+**Metric definitions and measurement notes**
 
-Working driver framework: Acquisition; Engagement; Conversion Funnel; Lead Quality. Align the diagram with Member 2's confirmed KPI definitions.
+| Driver | Metrics and operational definitions |
+|------------------------------------|------------------------------------|
+| Acquisition | **Users:** distinct GA4 users during the reporting period; **Sessions:** GA4 sessions; **Organic Search Sessions:** sessions attributed to the Organic Search channel. |
+| Engagement | **Engaged Sessions:** GA4 sessions meeting its engagement criteria; **Service Page Views:** `page_view` events on identified service pages; **Consultation CTA Clicks:** clicks on designated consultation calls to action (custom tracking may be needed). |
+| Conversion Funnel | **Consultation Form Starts:** tracked starts of the consultation form; **Successful Form Submissions:** confirmed successful consultation form submissions, excluding duplicates; **Form Completion Rate:** successful submissions ÷ form starts × 100%, with event counting and deduplication rules agreed in advance. |
+| Lead Quality | **Inquiries in Service Area:** inquiries with confirmed geography inside the agreed service area; **Inquiries by Service Interest:** inquiries categorized by requested orthodontic service; **Validated / Qualified Inquiries:** inquiries that meet client-approved qualification rules, if CRM or follow-up data are accessible. |
 
-<!-- Member 3: insert final diagram and explanatory notes here. -->
+**Diagnostic cuts:** Analyze the above metrics, where available and appropriate, by **default channel group / source-medium, campaign, landing page, device category, and geography**. Break down service-related and lead-quality metrics by **service interest** when captured. Avoid treating unknown geography or missing lead status as confirmed disqualification.
+
+**Dependencies and assumptions:** Member 2 should confirm the KPI definitions and decision questions; Member 4 should map the needed events and parameters; Member 5 should test collection. Lead qualification requires client-defined criteria and potentially CRM integration. Form starts, CTA clicks, and service interest may require additional GTM/GA4 configuration. GA4 alone cannot establish whether an inquiry is qualified without supporting data.
 
 # Event / Parameter Map
 
@@ -53,7 +81,7 @@ Working driver framework: Acquisition; Engagement; Conversion Funnel; Lead Quali
 Keep event and parameter names consistent across pages and funnels. Document duplicates, consent impact, embedded forms, and cross-domain issues where relevant (target: 1-2 pages).
 
 | KPI / Question Supported | Event Name | Trigger Definition | Required Parameters | Notes / Edge Cases |
-|---------------|--------------|--------------|--------------|--------------|
+|---------------|---------------|---------------|---------------|---------------|
 | Pending Member 4 | \- | \- | \- | \- |
 
 <!-- Member 4: replace the placeholder row and add rows as needed. -->
@@ -93,7 +121,7 @@ Target: 1 page. Describe executable checks.
 Provide at least six specific test cases covering key pathways, device, channel, and conversion. Rows below reserve space only; no tests have been performed.
 
 | Test Case | Steps to Perform | Expected Event(s) | Expected Parameters / Dimensions | Result / Notes |
-|-------------|-------------|-------------|--------------------|-------------|
+|--------------|--------------|--------------|----------------|--------------|
 | 1 - Pending | \- | \- | \- | Not designed or run |
 | 2 - Pending | \- | \- | \- | Not designed or run |
 | 3 - Pending | \- | \- | \- | Not designed or run |
