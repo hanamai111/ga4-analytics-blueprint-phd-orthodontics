@@ -16,9 +16,9 @@ format:
 editor: visual
 ---
 
-# Analytics Blueprint
+# Analytics Blueprint (Pei Yun Chuang)
 
-**Member 2 — Analytics Blueprint | Proposed measurement contract**
+**Member 2 — Analytics Blueprint \| Proposed measurement contract**
 
 ## Client Context and Measurement Goal
 
@@ -29,7 +29,7 @@ The shared **North Star outcome is Qualified Consultation Leads**: consultation 
 ## Stakeholder Questions and KPI Contract
 
 | Stakeholder decision question | KPI(s) and operational definition | Diagnostic dimensions / cuts | Proposed data source | Assumptions / dependencies |
-|---|---|---|---|---|
+|---------------|---------------|---------------|---------------|---------------|
 | **Q1. Which acquisition sources bring potential patients to the website?** | **Users:** distinct GA4 users in the period; **Sessions:** GA4 sessions in the period; **Organic Search Sessions:** sessions attributed to the GA4 Organic Search channel. | Session default channel group, session source/medium, campaign, landing page, device category | GA4 reports; BigQuery export if enabled | Traffic attribution depends on GA4 configuration, consent and campaign tagging. Traffic alone does not indicate lead quality. |
 | **Q2. Which treatment pages and calls to action indicate consultation interest?** | **Engaged Sessions:** sessions meeting GA4 engagement criteria; **Service Page Views:** `page_view` event count where the page matches the team's approved service-page list; **Consultation CTA Clicks:** event count of clicks on designated consultation CTAs. | Page path, landing page, device category, session channel | GA4; GTM for proposed CTA instrumentation; Looker Studio if connected | Confirm service-page URLs and CTA selectors. CTA clicks are intent signals, not confirmed inquiries. |
 | **Q3. Where do prospective patients drop off before submitting a consultation request?** | **Consultation Form Starts:** tracked starts of the designated consultation form; **Successful Form Submissions / Consultation Inquiries:** confirmed successful submissions, excluding duplicates; **Form Completion Rate:** successful consultation submissions ÷ consultation form starts × 100, using the same form, reporting period, and agreed deduplication/counting unit. | Form identifier (if collected), landing page, device category, channel | GA4 and GTM; BigQuery if enabled | Requires validated success detection, reliable start tracking, and a documented counting rule. The rate may exceed 100% or be misleading if starts and submissions are counted differently; report limitations. |
@@ -90,19 +90,42 @@ flowchart TB
 
 **Dependencies and assumptions:** Member 2 should confirm the KPI definitions and decision questions; Member 4 should map the needed events and parameters; Member 5 should test collection. Lead qualification requires client-defined criteria and potentially CRM integration. Form starts, CTA clicks, and service interest may require additional GTM/GA4 configuration. GA4 alone cannot establish whether an inquiry is qualified without supporting data.
 
-# Event / Parameter Map
+# Event / Parameter Map (Xueying Luo)
 
-> **Member 4 section - Event / Parameter Map (pending)**
+**Member 4 — Event / Parameter Map \| Proposed instrumentation plan**
 
-Keep event and parameter names consistent across pages and funnels. Document duplicates, consent impact, embedded forms, and cross-domain issues where relevant (target: 1-2 pages).
+This map supports Q1–Q5 and the four branches of the KPI Tree. It describes proposed collection; current GA4/GTM tags, form behavior, permissions, and third-party providers have not been verified. We should confirm the designated consultation form, approved service-page URLs, and CTA selectors before implementation. A consultation request is an inquiry, not a confirmed appointment or a qualified lead.
 
-| KPI / Question Supported | Event Name | Trigger Definition | Required Parameters | Notes / Edge Cases |
+## Events Required for the Measurement Plan
+
+The parameter column lists the minimum needed for this plan, including automatic parameters to verify and custom parameters to configure. These are not all mandatory parameters in Google's event specification.
+
+| KPI / question supported | Event name | Trigger definition | Required parameters | Notes / edge cases |
 |---------------|---------------|---------------|---------------|---------------|
-| Pending Member 4 | \- | \- | \- | \- |
+| **Q1, Q4, Q5:** Users, Sessions, Organic Search Sessions, device and traffic-geography comparisons | `session_start` (automatic) | GA4 starts a new website session under the property's session settings. | Verify automatic `ga_session_id`; retain native user/session context. | Do not fire an additional GTM session-start tag. Use GA4 user and session metrics, rather than counting this event as users. Consent and reporting identity can affect counts. |
+| **Q2, Q4:** Service Page Views, landing-page and device comparisons | `page_view` (automatic / enhanced measurement) | A page loads or a supported browser-history change occurs. Count service-page views only for the approved URL list. | Sanitized `page_location`, `page_referrer`, and automatic `ga_session_id`. | Use one page-view collection method; check automatic plus manual tags for duplicates. Preserve approved campaign tags while removing personal information from URLs. A landing page is the first page of the session, not necessarily the conversion page. |
+| **Q2, Q4:** Engaged Sessions | `user_engagement` (automatic), together with native page and key-event collection | GA4 records engagement with a page in focus, according to its normal collection behavior. | Verify automatic `engagement_time_msec` and session context. | Use GA4's Engaged sessions metric. A raw count of `user_engagement` events is not the engaged-session count. Record the property's engagement timer and key-event settings during validation. |
+| **Q2:** Consultation CTA Clicks | `consultation_cta_click` (custom) | A user activates a designated consultation-request link or button on any approved page. | `cta_id`, `cta_location`, sanitized `page_location`; native session context. | Use static CTA codes across desktop/mobile versions. Fire once per activation. Do not treat a CTA click, telephone-link click, or form opening as an inquiry. |
+| **Q3:** Consultation Form Starts and the completion denominator | `form_start` (enhanced measurement, or a single GTM implementation) | First interaction with the designated consultation form in a session; opening the page alone does not qualify. | Stable `form_id`, sanitized `page_location`; native session context. | Validate enhanced measurement first. If it is unreliable, use one manual implementation and disable overlapping automatic form tracking. Embedded forms may need provider callbacks. Use distinct sessions for the proposed completion rate below. |
+| **Q3, Q4:** Successful Form Submissions / Consultation Inquiries, Session Inquiry Rate | `generate_lead` (recommended; implementation required) | The designated form's server or provider confirms that a consultation request was successfully accepted. | Same `form_id` as the start event, `lead_type = consultation_request`, sanitized `page_location`; native session context. | Emit once per accepted request. Suppress repeat callbacks, retries, and confirmation-page reloads using the same internal success token; keep that token out of GA4. A submit-button click or unverified `form_submit` event is insufficient. Propose marking this as a key event after validation. |
 
-<!-- Member 4: replace the placeholder row and add rows as needed. -->
+## Parameters and Diagnostic Dimensions
 
-# Validation Checklist + Test Cases
+- **Static custom values:** `form_id = consultation_request` is a proposed analytics code, not a verified HTML ID. Map the actual form to this code. Assign `cta_id` from an approved CTA list and `cta_location` from a short list such as `header`, `main_content`, or `footer`. These values describe interface elements, not patients.
+- **Native dimensions:** Use session channel group, session source/medium, session campaign, landing page, device category, browser, and approximate city/region from GA4. Do not send them again as custom parameters. Check UTM preservation and session attribution through redirects. Register the static custom parameters as event-scoped custom dimensions when needed in GA4 reports.
+- **BigQuery, if enabled:** Session-based calculations use the combination of `user_pseudo_id` and `ga_session_id`. The former is an export field, not a custom parameter. Report results with missing session identifiers separately; do not silently substitute event counts or assume exact agreement with modeled GA4 reports.
+
+## Counting Rules and Dependencies
+
+**Form funnel counting rule:** For Form Completion Rate, count started sessions as distinct sessions containing `form_start`. Count completed started sessions as those containing a subsequent `generate_lead` for the same `form_id`, within the same session and reporting period. Form Completion Rate = completed started sessions ÷ started sessions × 100. Count each session once and report N/A when the denominator is zero. Report successful requests without an observed start separately. Total Consultation Inquiries count unique accepted requests after deduplication.
+
+**Inquiry count and Session Inquiry Rate:** Consultation Inquiries count unique accepted requests after the success-trigger deduplication above. Session Inquiry Rate counts sessions with at least one `generate_lead` divided by all observed sessions. Multiple accepted requests in one session can increase inquiry count while contributing only one converting session.
+
+**Lead quality (Q5):** Qualified leads, service-area eligibility, and requested service interest require client-approved definitions and de-duplicated inquiry records/CRM data. These are separate from GA4 event collection. Use aggregate client-record counts by approved categories; keep names, contact details, patient identifiers, and health/treatment responses out of GA4. GA4 city does not establish residence or clinic preference. Linking qualified leads back to a website channel is pending an approved, validated integration.
+
+**Validation hand-off:** In the next section, we will test desktop/mobile CTA activation, start-and-abandon, successful submission, validation failure, confirmation reload/duplicate callback, tagged campaign attribution, and consent behavior. For embedded or external forms, confirm an available success callback and permitted cross-domain setup; otherwise label the inquiry funnel not measurable. No collection tests have been run for this draft.
+
+# Validation Checklist + Test Cases (Yujia Luo)
 
 > **Member 5 section - Validation Checklist + Test Cases (pending)**
 
@@ -137,7 +160,7 @@ Target: 1 page. Describe executable checks.
 Provide at least six specific test cases covering key pathways, device, channel, and conversion. Rows below reserve space only; no tests have been performed.
 
 | Test Case | Steps to Perform | Expected Event(s) | Expected Parameters / Dimensions | Result / Notes |
-|--------------|--------------|--------------|----------------|--------------|
+|---------------|---------------|---------------|---------------|---------------|
 | 1 - Pending | \- | \- | \- | Not designed or run |
 | 2 - Pending | \- | \- | \- | Not designed or run |
 | 3 - Pending | \- | \- | \- | Not designed or run |
@@ -147,5 +170,5 @@ Provide at least six specific test cases covering key pathways, device, channel,
 
 # Appendix {.unnumbered}
 
--   [GitHub Repository](https://github.com/hanamai111/ga4-analytics-blueprint-phd-orthodontics)
--   [GitHub Pages Report](https://hanamai111.github.io/ga4-analytics-blueprint-phd-orthodontics/)
+- [GitHub Repository](https://github.com/hanamai111/ga4-analytics-blueprint-phd-orthodontics)
+- [GitHub Pages Report](https://hanamai111.github.io/ga4-analytics-blueprint-phd-orthodontics/)
