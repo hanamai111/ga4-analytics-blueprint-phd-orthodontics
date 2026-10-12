@@ -1,7 +1,5 @@
 # Team Contribution Log
 
-Completed work is recorded from the shared report. Canvas submission pending. Section completion dates were not independently verified; review date is recorded below.
-
 | Member | Member Name | Assigned Role | Work Completed | Date / Notes |
 |--------|-------------|---------------|----------------|--------------|
 | 1 | Han Mai | Quarto Integration & Final Review | Repository/project setup, Quarto structure, README and contribution log; final cross-section consistency review and integration. Final rendering and GitHub/GitHub Pages verification completed. | Reviewed 2026-10-11 |
