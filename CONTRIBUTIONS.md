@@ -2,7 +2,7 @@
 
 | Member | Member Name | Assigned Role | Work Completed | Date / Notes |
 |--------|-------------|---------------|----------------|--------------|
-| 1 | Han Mai | Quarto Integration & Final Review | Repository/project setup, Quarto structure, README and contribution log; final cross-section consistency review and integration. Final rendering and GitHub/GitHub Pages verification completed; Canvas submission pending. | Reviewed 2026-10-11 |
+| 1 | Han Mai | Quarto Integration & Final Review | Repository/project setup, Quarto structure, README and contribution log; final cross-section consistency review and integration. Final rendering and GitHub/GitHub Pages verification completed. | Reviewed 2026-10-11 |
 | 2 | Pei Yun Chuang | Analytics Blueprint | Completed Analytics Blueprint with five stakeholder questions, KPI definitions, diagnostic cuts, proposed sources and assumptions. | Reviewed 2026-10-11 |
 | 3 | Willy Su | KPI Tree / Metric Hierarchy | Completed Mermaid KPI Tree with North Star/proxy, four driver branches, metric notes and diagnostic cuts. | Reviewed 2026-10-11 |
 | 4 | Xueying Luo | Event / Parameter Map | Completed Event / Parameter Map, parameters, trigger/duplicate/privacy rules, session counting and dependencies. | Reviewed 2026-10-11 |
