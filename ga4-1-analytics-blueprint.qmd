@@ -51,7 +51,7 @@ The shared **North Star outcome is Qualified Consultation Leads**: consultation 
 The proposed North Star KPI is **Qualified Consultation Leads**: consultation inquiries that meet the practice's agreed qualification criteria. Because these criteria and the availability of lead-status data have not yet been confirmed, **Consultation Inquiries** (successfully submitted consultation requests) are the interim measurable proxy. This is a proposed measurement framework, not a claim about current client performance.
 
 ```{mermaid}
-flowchart TB
+flowchart LR
     NS["North Star: Qualified Consultation Leads<br/>(interim proxy: Consultation Inquiries)"]
     A["Acquisition"]
     E["Engagement"]
