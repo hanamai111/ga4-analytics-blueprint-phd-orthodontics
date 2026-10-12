@@ -15,13 +15,13 @@ Shared Quarto infrastructure for one HTML report containing the four assigned de
 
 ## Section ownership
 
-| Member | Responsibility |
-|--------|----------------|
-| 1 | Quarto Integration & Final Review |
-| 2 | Analytics Blueprint |
-| 3 | KPI Tree |
-| 4 | Event / Parameter Map |
-| 5 | Validation Checklist + Test Cases |
+| Member | Member Name | Responsibility |
+|--------|-------------|----------------|
+| 1 | Han Mai | Quarto Integration & Final Review |
+| 2 | Pei Yun Chuang | Analytics Blueprint |
+| 3 | Willy Su | KPI Tree / Metric Hierarchy |
+| 4 | Xueying Luo | Event / Parameter Map |
+| 5 | Yujia Luo | Validation Checklist + Test Cases |
 
 ## Simple collaboration workflow
 
@@ -29,6 +29,12 @@ Use one main QMD. Pull before editing; edit only your assigned section. Coordina
 
 ## Consistency guidance
 
-Agree on definitions before final integration: Qualified Consultation Lead, Consultation Inquiry, Engaged Session, CTA Click, Form Start, Successful Form Submission, Service Area, and campaign/channel/landing page/device dimensions. The proposed North Star and proxy are unconfirmed; not present them as established client facts.
+Agree on definitions before final integration: Qualified Consultation Lead, Consultation Inquiry, Engaged Session, CTA Click, Form Start, Successful Form Submission, Service Area, and campaign/channel/landing page/device dimensions. The proposed North Star and proxy are unconfirmed; do not present them as established client facts.
 
 The KPI Tree must match the Analytics Blueprint; the Event Map must support its KPIs; validation cases must test those same events and parameters. Explicitly document unavailable data and assumptions.
+
+Final integration: reviewed 2026-10-11. Canvas submission pending.
+
+Repository: https://github.com/hanamai111/ga4-analytics-blueprint-phd-orthodontics
+
+Published report: https://hanamai111.github.io/ga4-analytics-blueprint-phd-orthodontics/

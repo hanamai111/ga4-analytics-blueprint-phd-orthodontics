@@ -1,11 +1,11 @@
 # Team Contribution Log
 
-Record completed work only. Member numbers follow the proposed task division; names/usernames are pending.
+Completed work is recorded from the shared report. Canvas submission pending. Section completion dates were not independently verified; review date is recorded below.
 
-| Member | Assigned Role | Work Completed | Date / Notes |
-|--------|---------------|----------------|--------------|
-| 1 | Quarto Integration & Final Review | Repository created; initial report skeleton, configuration, README, and contribution log prepared | 2026-10-10; final integration pending |
-| 2 | Analytics Blueprint | Pending | - |
-| 3 | KPI Tree | Pending | - |
-| 4 | Event / Parameter Map | Pending | - |
-| 5 | Validation Checklist + Test Cases | Pending | - |
+| Member | Member Name | Assigned Role | Work Completed | Date / Notes |
+|--------|-------------|---------------|----------------|--------------|
+| 1 | Han Mai | Quarto Integration & Final Review | Repository/project setup, Quarto structure, README and contribution log; final cross-section consistency review and integration. Rendering/publication verification in progress; Canvas submission pending. | Reviewed 2026-10-11 |
+| 2 | Pei Yun Chuang | Analytics Blueprint | Completed Analytics Blueprint with five stakeholder questions, KPI definitions, diagnostic cuts, proposed sources and assumptions. | Reviewed 2026-10-11 |
+| 3 | Willy Su | KPI Tree / Metric Hierarchy | Completed Mermaid KPI Tree with North Star/proxy, four driver branches, metric notes and diagnostic cuts. | Reviewed 2026-10-11 |
+| 4 | Xueying Luo | Event / Parameter Map | Completed Event / Parameter Map, parameters, trigger/duplicate/privacy rules, session counting and dependencies. | Reviewed 2026-10-11 |
+| 5 | Yujia Luo | Validation Checklist + Test Cases | Completed collection, DebugView/Realtime, reporting and conditional BigQuery checklists, plus eight proposed test cases. Tests not run. | Reviewed 2026-10-11 |
