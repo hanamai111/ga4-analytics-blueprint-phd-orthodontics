@@ -167,6 +167,18 @@ Events below are expected funnel events; automatic events may also occur. Sessio
 
 **Technical guidance:** [GTM Preview](https://support.google.com/tagmanager/answer/6107056), [GA4 DebugView](https://support.google.com/analytics/answer/7201382), and [BigQuery export schema](https://support.google.com/analytics/answer/7029846).
 
+# Team Contributions {.unnumbered}
+
+The table below summarizes each team member's assigned role and completed work for this milestone.
+
+| Member | Member Name | Assigned Role | Work Completed | Date / Notes |
+|--------|-------------|---------------|----------------|--------------|
+| 1 | Han Mai | Quarto Integration & Final Review | Repository/project setup, Quarto structure, README and contribution log; final cross-section consistency review and integration. Final rendering and GitHub/GitHub Pages verification completed. | Reviewed 2026-10-11 |
+| 2 | Pei Yun Chuang | Analytics Blueprint | Completed Analytics Blueprint with five stakeholder questions, KPI definitions, diagnostic cuts, proposed sources and assumptions. | Reviewed 2026-10-11 |
+| 3 | Willy Su | KPI Tree / Metric Hierarchy | Completed Mermaid KPI Tree with North Star/proxy, four driver branches, metric notes and diagnostic cuts. | Reviewed 2026-10-11 |
+| 4 | Xueying Luo | Event / Parameter Map | Completed Event / Parameter Map, parameters, trigger/duplicate/privacy rules, session counting and dependencies. | Reviewed 2026-10-11 |
+| 5 | Yujia Luo | Validation Checklist + Test Cases | Completed collection, DebugView/Realtime, reporting and conditional BigQuery checklists, plus eight proposed test cases. Tests not run. | Reviewed 2026-10-11 |
+
 # Appendix {.unnumbered}
 
 -   [GitHub Repository](https://github.com/hanamai111/ga4-analytics-blueprint-phd-orthodontics)
