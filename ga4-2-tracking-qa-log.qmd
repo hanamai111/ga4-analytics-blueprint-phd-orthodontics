@@ -35,22 +35,43 @@ main figure img { width: 100%; height: auto; }
 
 This log compares the PhD Orthodontics implementation with the existing GA4-1 Event / Parameter Map. The Canvas assignment and repository blueprint were reviewed before testing. QA was performed on **November 4, 2026, approximately 9:45–9:58 p.m. Pacific**, using desktop Chrome in the signed-in school profile. GA4 reporting checks use **October 7–November 3, 2026 (Last 28 days)**. Admin's Recent events inventory uses its own last-28-days window; it is not a controlled test-session log.
 
-::: {.callout-warning title="Overall result: PARTIAL — collection acceptance remains blocked"}
-GA4 contains processed client-site data, and selected reporting dimensions are populated. However, a fresh Tag Assistant connection timed out after Chrome showed `NET::ERR_CERT_COMMON_NAME_INVALID`. The homepage's Request Appointment CTA also led to a privacy-error page, and the Smile Arc treatment-page attempt returned the same certificate error. No PhD Orthodontics GTM container was visible in the accessible Accounts list. No funnel event was fully validated end to end, no required event parameter was verified in an expanded DebugView event, and duplicate prevention remains untested. These limits must be resolved before inquiry-funnel or attribution analysis.
+::: {.callout-warning title="Overall result: PARTIAL — live retest made progress; funnel acceptance remains open"}
+The initial 9:45–9:58 p.m. checks were blocked by a certificate warning. A later live retest (approximately 10:42–10:45 p.m. Pacific, November 4) connected on the `www` hostname and exposed a page-view payload and sent-hit summary through Chrome's accessibility view. That retest is documented below and supersedes the initial connection-only findings. The browser inspection connection continued to time out, and screenshots frequently returned blank or outdated content. The new observations therefore have accessibility-text evidence, not reliable new screenshot proof. Full event, form, duplicate and DebugView acceptance is still incomplete; no requirement is marked passed solely from a Connected badge.
 :::
 
-No GTM publication, GA4 setting change, website edit, BigQuery activation, or form submission was performed. No patient or synthetic inquiry was created. All figures in this report were captured during this QA session; earlier QA evidence and demo-property screenshots were not used as current proof.
+## Live Retest — Current Findings
 
-## Property and Collection Configuration
+After the user restored website access, Tag Assistant connected to `https://www.phdorthodontics.com/` with its debug signal enabled. The user-handled security state was not changed or bypassed by the assistant. The initial screenshots below are retained as a dated record, not as the final state of this retest.
+
+**Evidence quality:** The following values were read from Tag Assistant's native Chrome accessibility panel. They were not inferred from historical reports. Attempts to save current screenshots returned a blank panel; these unusable images are not included as successful evidence. Private local inspection notes retain the observations, but client/session identifiers, full debug tokens and raw diagnostic files are excluded from the public report. A readable screenshot and GA4-side expanded event should still be captured before claiming screenshot-backed acceptance.
+
+| Live check | Direct observation | Result and limit |
+|----|----|----|
+| On-page destinations | Homepage detected `GTM-KRNXX9TF`, `GTM-WN7FZBMP`, `AW-17603400128`, `G-XRPHCNHL18`, and `G-1K6VTJHYM3` | Expected receiving ID is live. Additional destinations require owner review; multiple IDs alone do not prove duplicate events or a wrong-property defect. |
+| Expected stream / source | `G-XRPHCNHL18` details identify an on-page `gtag('config')`, with Google tag ID `GT-T9BHGBCS`. Hits Sent contains a Page View to this measurement ID | Live destination observed; workspace ownership, all collection paths and processed arrival are not fully validated. |
+| Homepage page-view payload | Hit Details shows `en = page_view`, `tid = G-XRPHCNHL18`, `_dbg = 1`; `dl` is the `www` homepage with the Tag Assistant debug query; `dr = https://tagassistant.google.com/`; `dt = PhD Orthodontics – PhD Orthodontics`; numeric `sid` is present | Event, destination, URL, referrer, title, debug flag and native session context observed. Wire-format `sid` is not a separately validated GA4 DebugView `ga_session_id` parameter. URL sanitization is not accepted: the debug query and QA referrer remain in this sample. |
+| One hero Request Appointment activation | After accepting the cookie banner, the homepage hero CTA was activated once; address/title changed to `/request-appointment/` / Request Appointment – PhD Orthodontics | Navigation works in this retest. No `consultation_cta_click`, `cta_id` or `cta_location` appeared in the expected stream's inspected sent-hit summary. This is a failed observation of the planned CTA contract for this action, not proof that no implementation exists anywhere. |
+| Limited page-view duplicate check | Expected stream summary lists exactly two Page View hits and one User Engagement hit across the homepage and appointment parent page; Pages Tagged shows 2/3 pages | No extra page-view hit is visible in this small two-page summary. This does not certify same-destination duplication across all containers, reload/history behavior, other pages, or delayed hits. Form/callback duplicate checks were not executed. |
+| Engagement | `user_engagement` appears in the timeline and User Engagement in Hits Sent for the expected stream | Live name/destination observed; `engagement_time_msec` value could not be expanded. PARTIAL. |
+| Appointment provider boundary | Tag Assistant adds an Appointments • Greyfinch page, reports `greyfinch.com` is not enabled for debugging, and detects `GTM-KTF69MW` / `G-YBPZ3HS7F1` in the expanded session | Provider boundary observed; provider ownership, destination mapping and cross-domain/session continuity remain unverified. The expected tag's 2/3 coverage is not proof every embedded provider page should carry it. |
+| Form start / accepted request | Appointment page content became unavailable to Computer Use; no reliable field interaction, accepted request, or callback test completed | `form_id`, `lead_type`, first-interaction behavior and success deduplication remain NOT TESTABLE. No patient information or fabricated inquiry was submitted. |
+
+**Updated issue status:** QA-01 is **partially mitigated**: the `www` homepage and appointment navigation worked, while inspection reliability and the treatment-page retest remain unresolved. QA-02 remains **unresolved**: Tag Assistant explicitly reported no access to `GTM-KRNXX9TF`; no client workspace was opened or edited. QA-03 now includes a specific controlled CTA action with no planned custom CTA hit in the inspected stream. QA-05 is **partially mitigated** by the page-view payload and limited hit-count evidence; GA4 DebugView arrival, remaining parameters and comprehensive duplicates still require testing. QA-06 remains unresolved, with the additional live GA4 destination requiring an owner-confirmed mapping. QA-04, QA-07 and QA-08 were not re-tested and retain their initial status.
+
+**Next acceptance run:** Restore stable inspection, obtain owner access to both live GTM containers, capture readable screenshots, and expand the expected stream's events in GA4 DebugView. Test Smile Arc plus header/main CTA placements individually; inspect engagement timing and repeat/reload/history behavior. In an approved isolated provider test, validate first interaction, consistent form/session values, actual accepted-request callback and once-only `generate_lead`. Do not treat appointment-page load or a form submission attempt as successful acceptance.
+
+No GTM publication, GA4 setting change, website edit, BigQuery activation, or form submission was performed. No patient or synthetic inquiry was created. The 16 figures below were captured during the initial 9:45–9:58 p.m. QA window. The later retest has separately labeled accessibility-text observations; no blank retest capture is presented as proof. Demo-property screenshots were not used.
+
+## Initial Property and Collection Configuration
 
 The supplied GA4 URL identifies property **540432856** under account **396896788**, displayed as **phdorthodontics.com**. Two web streams are present in that property:
 
 | Stream | Measurement ID | Admin observation | Interpretation |
-|---|---|---|---|
+|----|----|----|----|
 | `phdorthodontics.com` (stream 15013125726) | `G-XRPHCNHL18` | Data collection active in the past 48 hours | Receiving stream in the supplied property; this does not identify every live on-page destination. |
 | `PhD Orthodontics` (stream 16133876327) | `G-J1RJZW4VBV` | No data received; collection not active | Second stream is inactive. Client/vendor must confirm the canonical destination. |
 
-**Earlier property/tag mismatch: not reverified.** Two streams in one property are not proof of a wrong-property installation. The site's currently firing measurement ID and GTM container ID could not be independently established because the fresh debugging connection failed. Do not label the earlier mismatch fixed or still present from these admin screens alone.
+**Initial mismatch assessment:** Two streams in one property are not proof of a wrong-property installation. Initial debugging failed; the later retest above established that `G-XRPHCNHL18` is live and found additional destinations. Their owning properties and intended roles remain unverified; do not label the earlier mismatch fixed or present solely from these screens.
 
 ![Receiving web stream in the supplied property: G-XRPHCNHL18; traffic received within 48 hours.](images/ga4-2/ga4-active-stream.jpg){#fig-active}
 
@@ -60,12 +81,12 @@ The receiving stream has enhanced measurement enabled, including page views and 
 
 ![Enhanced measurement settings for the receiving stream; page views and form interactions are enabled. No settings were changed.](images/ga4-2/enhanced-measurement.jpg){#fig-enhanced}
 
-# GA4-1 Measurement Reference
+# GA4-1 Measurement Reference — Initial Comparison
 
 The existing repository QMD and the supplied rendered GA4-1 HTML agree on the following measurement contract. The KPI branches remain Acquisition, Engagement, Conversion Funnel, and Lead Quality.
 
 | Event | Blueprint trigger | Parameters to verify | Current evidence / reconciliation |
-|---|---|---|---|
+|----|----|----|----|
 | `session_start` | Native session begins; never add a manual GTM session-start tag | `ga_session_id`; native session context | Listed in Recent events; native origin/session ID not verified. **PARTIAL**. |
 | `page_view` | Approved page load or supported history change; one collection method | Sanitized `page_location`, `page_referrer`, `ga_session_id` | Recent events and processed page reports exist; live firing/duplicates not verified. **PARTIAL**. |
 | `user_engagement` | Native engagement collection | `engagement_time_msec`; session context | Listed in Recent events; raw event count is not Engaged sessions. **PARTIAL**. |
@@ -77,9 +98,11 @@ The existing repository QMD and the supplied rendered GA4-1 HTML agree on the fo
 
 **Counting contract:** Consultation Inquiries are deduplicated confirmed successful requests. Form Completion Rate uses distinct started sessions with a subsequent same-form `generate_lead` in the same session/reporting period divided by distinct started sessions; count each session once, show N/A for zero starts, and report leads without starts separately. Qualified Consultation Leads require client-defined criteria and validated inquiry/CRM records. CTA clicks, telephone clicks, form openings, `form_submit`, platform key events, inquiries, qualified leads and booked appointments are separate concepts.
 
-# Deliverable 1 — Screenshot-Backed QA Checklist
+# Deliverable 1 — Initial Screenshot-Backed QA Checklist
 
 **Result labels:** PASS means the stated check has screenshot support within its limited scope; FAIL means a directly observed expected behavior failed; PARTIAL means some evidence exists but acceptance criteria remain unverified; NOT TESTABLE means access, safety or environment prevents validation; NOT IMPLEMENTED means an inspected feature is demonstrably absent. A reporting-dimension PASS does not certify live collection or conversion tracking.
+
+The following checklist records the **initial 9:45–9:58 p.m. window**. Its blocked results are retained for traceability; the later Live Retest section above provides current updates.
 
 ## A. GTM / Collection Layer
 
@@ -98,7 +121,7 @@ A Tag Assistant connection was attempted for `https://phdorthodontics.com/` with
 ### Pages and Actions Attempted
 
 | Page / action | Observed outcome | Live collection acceptance |
-|---|---|---|
+|----|----|----|
 | Homepage `/` | Existing tab displayed the homepage and its Request Appointment CTAs; fresh Tag Assistant navigation failed | **NOT TESTABLE** for tag firing, live measurement ID and duplicates |
 | Treatment `/services/smile-arc/` | Fresh page attempt returned the certificate error | **NOT TESTABLE**; processed historical page reports are separate evidence |
 | Consultation `/request-appointment/` | Activating the homepage hero Request Appointment CTA reached a privacy-error page | **NOT TESTABLE**; no successful form interaction or submission |
@@ -108,7 +131,7 @@ A Tag Assistant connection was attempted for `https://phdorthodontics.com/` with
 ### Event Checklist
 
 | Event | Trigger condition | Page/action tested | Expected parameters | Duplicate check | Result | Evidence |
-|---|---|---|---|---|---|---|
+|----|----|----|----|----|----|----|
 | `page_view` | One collection path per page load/history change | Homepage debug connection; Smile Arc attempt; appointment CTA navigation | `page_location`, `page_referrer`, `ga_session_id` | Automatic/manual overlap could not be inspected | **PARTIAL**: processed page data exists, fresh firing blocked | @fig-active, @fig-enhanced, @fig-ta, @fig-path |
 | `consultation_cta_click` | Once per designated CTA activation | One hero Request Appointment activation | `cta_id`, `cta_location`, `page_location`; session context | Not verified | **NOT TESTABLE**; absent from recent inventory, not proof of no tag | @fig-ta, @fig-recent |
 | `form_start` | First actual interaction, not appointment-page load | Appointment navigation blocked; no field interaction | `form_id`, `page_location`; session context | Enhanced/manual overlap and repeat interaction not verified | **PARTIAL**: historical event present, intended trigger unvalidated | @fig-enhanced, @fig-recent |
@@ -129,7 +152,7 @@ DebugView showed **0 debug devices** and no development-device events in the las
 ![Realtime overview has no active users/events at capture time; it cannot establish arrival of the attempted test actions.](images/ga4-2/realtime-no-events.jpg){#fig-realtime}
 
 | Check | Required validation | Observation | Result | Evidence |
-|---|---|---|---|---|
+|----|----|----|----|----|
 | CTA arrival and values | Expanded `consultation_cta_click`; stable/populated `cta_id`, `cta_location`, sanitized `page_location` | No debug event available | **NOT TESTABLE** | @fig-debug, @fig-realtime |
 | Form-start arrival and values | Expanded `form_start`; stable `form_id`, correct URL, session context | Listed historically; no controlled arrival or parameter values | **PARTIAL** | @fig-debug, @fig-recent |
 | Accepted-request arrival | Expanded `generate_lead`; matching form/session; exact `lead_type = consultation_request` | No safe submission; no debug event | **NOT TESTABLE** | @fig-debug, @fig-recent |
@@ -153,7 +176,7 @@ The Key events tab listed `ads_conversion_Book_appointment_1` with stream activi
 The following checks concern **processed dimension population**, not live test attribution, funnel completion or business performance. Date range: October 7–November 3, 2026. Report totals show 152 sessions, 214 views and 693 events; these units are different. No controlled non-debug test visit was successfully reconciled to processed reports.
 
 | Dimension | Report used | What was checked | Finding | Result | Screenshot |
-|---|---|---|---|---|---|
+|----|----|----|----|----|----|
 | Session source / medium | Traffic acquisition | Populated direct, organic, referral and paid values | `(direct) / (none)` 77 sessions; `google / organic` 62; `bing / organic` 7; Tag Assistant referral 3; AI assistant, Google CPC and another referral 1 each | **PASS**, population only; QA referral contamination requires follow-up | @fig-source |
 | Session campaign | Traffic acquisition | Campaign names and default/unknown values | `Kids Orthodontist` and `business-profile` each 1 session; `(direct)` 77, `(organic)` 69, `(referral)` 3, `(ai-assistant)` 1. No `(not set)` row shown in the six-row view | **PASS**, population only; campaign correctness/redirect preservation untested | @fig-campaign |
 | Page location | Pages and screens, page path | Expected site paths; malformed values in visible sample | `/`, `/services/smile-arc/`, `/request-appointment/`, and other recognizable paths appear. Full `page_location` including hostname/query was not available in the inspected dimension picker | **PARTIAL**; path is not full URL and cannot certify URL privacy | @fig-path |
@@ -183,7 +206,7 @@ No PII was apparent in the displayed path/title sample. **That limited observati
 ![BigQuery links is empty in the supplied property; no export exists to validate.](images/ga4-2/bigquery-link-status.jpg){#fig-bq}
 
 | Check | Finding | Result |
-|---|---|---|
+|----|----|----|
 | Export link exists | No links yet | **NOT IMPLEMENTED** |
 | Relevant events in `events_*` | No linked export to inspect | **NOT TESTABLE** |
 | `UNNEST(event_params)` extraction | No actual export dataset available; no query run | **NOT TESTABLE** |
@@ -191,18 +214,18 @@ No PII was apparent in the displayed path/title sample. **That limited observati
 
 **Validation timing and owner:** After the client approves the canonical stream and export setup, the authorized GA4/GCP owner should create the link and grant appropriate access. Recheck when the first daily `events_YYYYMMDD` table appears; check intraday tables only if streaming is enabled. Export start time, timezone and table availability must be recorded; do not assume past data will backfill. On the first available approved QA date, the analytics team should:
 
-1. Run a bounded date-range event-name/count query for `consultation_cta_click`, `form_start`, and `generate_lead` using the actual project and dataset.
-2. Extract `cta_id`, `cta_location`, `form_id`, `lead_type`, `page_location` and `ga_session_id` using scalar subqueries over `UNNEST(event_params)`, reading the correct string/integer value type.
-3. Match each controlled test's event name, parameter key and actual value with the saved expanded DebugView event; account for export delay, consent and active filters.
-4. Group sessions by `user_pseudo_id` plus `ga_session_id`; flag missing identifiers and avoid combining daily/intraday copies twice.
-5. Apply the GA4-1 same-form/session sequence and deduplication rules before producing completion or attribution metrics. Publish actual SQL/output evidence only after execution; no placeholder dataset is presented as a result here.
+1.  Run a bounded date-range event-name/count query for `consultation_cta_click`, `form_start`, and `generate_lead` using the actual project and dataset.
+2.  Extract `cta_id`, `cta_location`, `form_id`, `lead_type`, `page_location` and `ga_session_id` using scalar subqueries over `UNNEST(event_params)`, reading the correct string/integer value type.
+3.  Match each controlled test's event name, parameter key and actual value with the saved expanded DebugView event; account for export delay, consent and active filters.
+4.  Group sessions by `user_pseudo_id` plus `ga_session_id`; flag missing identifiers and avoid combining daily/intraday copies twice.
+5.  Apply the GA4-1 same-form/session sequence and deduplication rules before producing completion or attribution metrics. Publish actual SQL/output evidence only after execution; no placeholder dataset is presented as a result here.
 
-# Deliverable 2 — Issues Log
+# Deliverable 2 — Issues Log (Initial Findings)
 
-These are observed current QA problems or acceptance gaps. Suspected causes are hypotheses, not verified configuration defects. No issue is marked resolved without a successful retest.
+These are the initial QA problems or acceptance gaps. Current retest status changes are explicitly recorded in the Live Retest section above; the original rows remain as a traceable baseline. Suspected causes are hypotheses, not verified configuration defects. No issue is marked fully resolved without complete acceptance evidence.
 
 | ID | Issue | Detected in | Severity | Evidence | Suspected cause | Action/fix attempted | Status |
-|---|---|---|---|---|---|---|---|
+|----|----|----|----|----|----|----|----|
 | QA-01 | Certificate warning and failed Tag Assistant connection prevent fresh collection QA | Chrome / Tag Assistant | **High** | @fig-cert, @fig-ta | Certificate hostname/redirect or local environment problem; root cause not established | Retried connection; attempted appointment CTA and Smile Arc page; stopped at security warning; refer diagnosis to vendor | **Unresolved** |
 | QA-02 | GTM workspace/tags/triggers are inaccessible in current account | GTM Accounts | **High** | @fig-gtm-access | Missing container access or different owning account | Inspected Accounts view; no container edits/publish; request authorized owner review | **Unresolved** |
 | QA-03 | Planned CTA and accepted-request event names have no observed recent evidence | GA4 Recent events | **High** | @fig-recent | Tags may be absent, named differently, routed elsewhere, or have no eligible recent activity; access prevents distinction | Compared all nine inventory entries with GA4-1; did not fabricate events or substitute `form_submit` | **Unresolved** |
@@ -217,7 +240,7 @@ No duplicate page/form event, missing specific parameter value, pre-consent firi
 # Deliverable 3 — Remaining Risks & Mitigation Plan
 
 | Risk | Why it matters for KPIs or downstream analysis | Likely impact | Mitigation |
-|---|---|---|---|
+|----|----|----|----|
 | Website/vendor dependency and certificate instability | Interrupted browsing or diagnostics can suppress observed funnel steps and delay QA acceptance | **High** | Vendor checks hostname certificate chain/redirects and local-environment differences; retest all three pages before interpreting changes in traffic or inquiries |
 | CTA selector changes and desktop/mobile differences | CTA counts and funnel drop-off could become inconsistent across placements/devices | **High** | Approve static CTA codes and selectors; test header, hero/main and other actual placements separately on desktop/mobile after each site update |
 | Enhanced measurement overlapping manual implementations | Duplicate views/starts inflate engagement and distort session/form relationships | **High** | Inspect the owning container; use one page-view strategy and one reliable form-start implementation; repeat-action and reload tests with parameter evidence |
@@ -233,9 +256,9 @@ No duplicate page/form event, missing specific parameter value, pre-consent firi
 
 **Trustworthy within a narrow scope:** the supplied property has a receiving stream, processed recognizable site pages, and populated source/medium, campaign, title and device dimensions. These reporting checks are useful for descriptive QA, with QA referral contamination disclosed. They do not prove that the blueprint was implemented correctly.
 
-**Fully validated funnel events: none.** `page_view`, `session_start`, `user_engagement` and `form_start` have historical/inventory evidence only. `consultation_cta_click` and `generate_lead` have no observed recent inventory evidence and were not verified live. All required payload values, exact trigger behavior, consent behavior and duplicate suppression remain unaccepted. The earlier tag/property mismatch remains unverified; the existence of two streams is insufficient to diagnose it.
+**Fully validated funnel events: none.** The later retest establishes live `page_view` destination and selected wire-format values, a live engagement event name, working hero-to-appointment navigation, and a small two-page hit-count observation. These are substantive improvements over the initial blocked run, but reliable new screenshots and GA4 DebugView confirmation are missing. The planned custom CTA hit was not observed for the one tested hero action. `form_start`, accepted-request `generate_lead`, their required parameters and duplicate suppression remain unaccepted. Additional live GA4/GTM destinations need an owner-confirmed inventory; their presence alone does not diagnose duplicate firing or a property mismatch.
 
-**Readiness:** not ready for inquiry-funnel, BigQuery-dependent attribution, lead-quality, booking or ROI claims. Restore safe site/debug access, obtain GTM owner access, approve the canonical destination, inspect legacy key-event triggers, and run the full parameter/duplicate/safe-success tests. Link and validate BigQuery only after authorization. Until then, exclude unverified key events from consultation-inquiry claims and present processed reporting as limited descriptive evidence.
+**Readiness:** not ready for inquiry-funnel, BigQuery-dependent attribution, lead-quality, booking or ROI claims. Restore reliable inspection, obtain GTM/provider owner access, approve destination mapping, inspect legacy key-event triggers, and complete parameter/duplicate/safe-success tests. Link and validate BigQuery only after authorization. Until then, exclude unverified key events from consultation-inquiry claims and present processed reporting as limited descriptive evidence.
 
 # Team Contributions
 
@@ -245,25 +268,25 @@ The existing contribution file documents GA4-1 roles, not verified GA4-2 work. T
 
 ## Publication and Files
 
-- [GitHub repository](https://github.com/hanamai111/ga4-analytics-blueprint-phd-orthodontics)
-- [GA4-2 published page](https://hanamai111.github.io/ga4-analytics-blueprint-phd-orthodontics/ga4-2-tracking-qa-log.html)
-- [GA4-1 published blueprint](https://hanamai111.github.io/ga4-analytics-blueprint-phd-orthodontics/ga4-1-analytics-blueprint.html)
-- [Canvas assignment reviewed; no upload or submission performed](https://canvas.cpp.edu/courses/143274/assignments/1551021?module_item_id=5535841)
-- Source: `ga4-2-tracking-qa-log.qmd`; rendered HTML: `docs/ga4-2-tracking-qa-log.html`.
-- Evidence: 16 current screenshots in `images/ga4-2/`, each captioned and referenced above. Click a figure to inspect it at larger size.
+-   [GitHub repository](https://github.com/hanamai111/ga4-analytics-blueprint-phd-orthodontics)
+-   [GA4-2 published page](https://hanamai111.github.io/ga4-analytics-blueprint-phd-orthodontics/ga4-2-tracking-qa-log.html)
+-   [GA4-1 published blueprint](https://hanamai111.github.io/ga4-analytics-blueprint-phd-orthodontics/ga4-1-analytics-blueprint.html)
+-   [Canvas assignment reviewed; no upload or submission performed](https://canvas.cpp.edu/courses/143274/assignments/1551021?module_item_id=5535841)
+-   Source: `ga4-2-tracking-qa-log.qmd`; rendered HTML: `docs/ga4-2-tracking-qa-log.html`.
+-   Evidence: 16 current screenshots in `images/ga4-2/`, each captioned and referenced above. Click a figure to inspect it at larger size.
 
 ## Rubric and Manual Review
 
 | Requirement | Documentation status | Remaining acceptance work |
-|---|---|---|
-| A. GTM/collection | Access and live-connection attempts documented with screenshots | Three-page firing, CTA placements, triggers, destination and duplicates remain blocked |
-| B. DebugView/Realtime | Both inspected; lack of test evidence shown | Expanded event/parameter evidence and controlled arrival still required |
+|----|----|----|
+| A. GTM/collection | Initial screenshots plus later accessibility-text retest; expected live destination and limited two-page hit summary observed | Reliable retest screenshots, treatment page, other CTA placements, all trigger paths and comprehensive duplicates remain open |
+| B. DebugView/Realtime | Initial no-device views captured; later Tag Assistant page-view payload read | GA4-side expanded arrival, CTA/form/engagement values and screenshot proof still required |
 | C. Reporting | Source/medium, campaign, path/title and device views captured | Full `page_location` privacy, eligible test attribution and all-row review remain partial |
 | D. BigQuery | No-link state verified and future plan given | Actual queries and DebugView reconciliation depend on authorized export |
 | Issues (25%) | Specific observed findings, severity, suspected causes, actions and status included | Owner/vendor fixes and retests remain unresolved |
 | Risks (20%) | Separate table connects risks to KPIs, Ads, funnels, exports and attribution | Mitigations need accountable implementation after approval |
 | Professional documentation (15%) | Consistent labels, captions, blueprint definitions and limitations included | Team contribution confirmation and final student review required |
 
-**All rubric items are not fully satisfied in execution.** The three requested report sections are present, but the core live validation coverage (40%) is constrained by the documented blockers. A documented NOT TESTABLE result does not replace the missing successful test evidence. Before Canvas submission, review the unresolved checklist with the instructor/team and obtain the remaining evidence if possible.
+**All rubric items are not fully satisfied in execution.** The three requested report sections are present and the later live retest adds partial collection evidence, but core validation coverage (40%) remains constrained by missing reliable screenshots, GA4-side confirmation and incomplete form/duplicate tests. A documented NOT TESTABLE result does not replace the missing successful test evidence. Before Canvas submission, review the unresolved checklist with the instructor/team and obtain the remaining evidence if possible.
 
 Production actions still requiring the appropriate client/vendor/owner approval include GTM publishing, WordPress/vendor code changes, destination rerouting, consent/filter changes, key-event/Ads mapping changes, form callbacks, and BigQuery activation. This report proposes these actions; it does not claim they were performed. Canvas submission remains with Han Mai.
