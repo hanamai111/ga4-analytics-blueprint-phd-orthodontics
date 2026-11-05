@@ -39,7 +39,7 @@ This log compares the PhD Orthodontics implementation with the existing GA4-1 Ev
 The initial 9:45–9:58 p.m. checks were blocked by a certificate warning. A later live retest (approximately 10:42–10:45 p.m. Pacific, November 4) connected on the `www` hostname and exposed a page-view payload and sent-hit summary through Chrome's accessibility view. That retest is documented below and supersedes the initial connection-only findings. The browser inspection connection continued to time out, and screenshots frequently returned blank or outdated content. The new observations therefore have accessibility-text evidence, not reliable new screenshot proof. Full event, form, duplicate and DebugView acceptance is still incomplete; no requirement is marked passed solely from a Connected badge.
 :::
 
-## Live Retest — Current Findings
+## Live Retest — First Connected Findings
 
 After the user restored website access, Tag Assistant connected to `https://www.phdorthodontics.com/` with its debug signal enabled. The user-handled security state was not changed or bypassed by the assistant. The initial screenshots below are retained as a dated record, not as the final state of this retest.
 
@@ -59,6 +59,65 @@ After the user restored website access, Tag Assistant connected to `https://www.
 **Updated issue status:** QA-01 is **partially mitigated**: the `www` homepage and appointment navigation worked, while inspection reliability and the treatment-page retest remain unresolved. QA-02 remains **unresolved**: Tag Assistant explicitly reported no access to `GTM-KRNXX9TF`; no client workspace was opened or edited. QA-03 now includes a specific controlled CTA action with no planned custom CTA hit in the inspected stream. QA-05 is **partially mitigated** by the page-view payload and limited hit-count evidence; GA4 DebugView arrival, remaining parameters and comprehensive duplicates still require testing. QA-06 remains unresolved, with the additional live GA4 destination requiring an owner-confirmed mapping. QA-04, QA-07 and QA-08 were not re-tested and retain their initial status.
 
 **Next acceptance run:** Restore stable inspection, obtain owner access to both live GTM containers, capture readable screenshots, and expand the expected stream's events in GA4 DebugView. Test Smile Arc plus header/main CTA placements individually; inspect engagement timing and repeat/reload/history behavior. In an approved isolated provider test, validate first interaction, consistent form/session values, actual accepted-request callback and once-only `generate_lead`. Do not treat appointment-page load or a form submission attempt as successful acceptance.
+
+## Follow-up Diagnosis — November 4, Approximately 10:57–11:01 p.m. Pacific
+
+This follow-up used the existing report and GA4-1 map; it did not replace the report. Browser inspection timed out again. Native Chrome accessibility exposed some current Tag Assistant and Elements content, but screenshots returned blank and DOM search results became unreadable. These observations are **PARTIAL** evidence, not new screenshot-backed PASS results.
+
+### Hero CTA and Workspace Decision
+
+The homepage hero control is exposed to accessibility as **button — Request Appointment**, below “You Change The World,” at `https://www.phdorthodontics.com/`. Accessibility role does **not** establish the underlying HTML tag. The Elements search found four matches for Request Appointment, but selected DOM rows were blank; the actual element tag, ID, classes, unique selector and data attributes could not be read. An attempted element-inspector selection instead activated the control and navigated to `/request-appointment` (without a trailing slash). That action was in the original site tab, not a newly verified workspace Preview session; it is not counted as a clean new event-firing or duplicate test.
+
+| Requested check | Actual result | Status |
+|----|----|----|
+| Hero DOM / selector | Visible text and accessibility role established; exact HTML element, selector, ID/classes/data attributes unavailable | **PARTIAL** |
+| Click variables / event | Fresh Click ID, Click Classes, Click URL, Click Text and GTM event name could not be inspected. Navigation destination is not substituted for the Click URL variable | **NOT TESTABLE** |
+| Fired / not-fired tags | Tag Assistant's Tags view explicitly states “You do not have access to this container” for `GTM-KRNXX9TF` | **NOT TESTABLE** |
+| Existing `consultation_cta_click` tag and trigger | Tag inventory, event name, destination, trigger conditions/page restrictions and parameter mappings inaccessible | **NOT TESTABLE** — tag absence is not established |
+| Exact cause of earlier missing CTA hit | Earlier inspected stream summary lacked the planned hit; no selector/text/URL/path/tag mismatch can be established without tag/trigger and click-variable evidence | **NOT TESTABLE** — root cause remains unknown |
+| Workspace repair / parameter mapping | No client workspace was available. No tag, trigger or variable was created or changed; no actual `cta_id` or `cta_location` value validated | **NOT TESTABLE** |
+| Fix Preview and GA4 arrival | No fix existed to Preview-test; no new expanded CTA event in GA4 DebugView was verified | **NOT TESTABLE** — no PASS IN PREVIEW claim |
+
+**Access verification:** Clearing the GTM Accounts name filter showed one unrelated Blogger container (`GTM-KS9KHLWL`), not either live PhD Orthodontics container. The unrelated container was not edited. The site owner must provide appropriate workspace access to the actual owning container and read/diagnostic access to the other live container for overlap review. No access permissions were changed by the assistant.
+
+### Actual Installation Topology Observed
+
+| Surface | Direct observation | Interpretation / status |
+|----|----|----|
+| Homepage Elements panel | Separate script elements reference `https://www.googletagmanager.com/gtag/js?id=G-1K6VTJHYM3` and `https://www.googletagmanager.com/gtag/js?id=G-XRPHCNHL18` | **PARTIAL**: two DOM Google tag references confirmed. Their WordPress/plugin/vendor source and whether any reference was injected by another script remain unverified. |
+| Tag Assistant secondary destination | `G-1K6VTJHYM3` / `GT-KD7C5M8L`; source shown as on-page `gtag('config')`; summary contains two Page View hits and one User Engagement hit over the existing two parent pages | **PARTIAL**: more than one GA4 destination sends page views. This does not prove an extra hit to the same measurement ID. |
+| Expected destination | Earlier retest: `G-XRPHCNHL18` / `GT-T9BHGBCS`, on-page `gtag('config')`; two Page View hits across the two parent pages | **PARTIAL**: retain earlier limited count; no fresh three-page acceptance run completed. |
+| Homepage GTM / Ads | `GTM-KRNXX9TF`, `GTM-WN7FZBMP`, `AW-17603400128` detected in Tag Assistant; selected first GTM source is on-page `gtm.js` snippet | **PARTIAL**: container detection is not a readable inventory of tags or triggers. First GTM Hits Sent shows no hits, while Tags view denies access; do not infer that its tag inventory is empty. |
+| Appointment session / provider | Earlier retest adds Appointments • Greyfinch, `GTM-KTF69MW`, `G-YBPZ3HS7F1`, and unknown-domain debug notice for `greyfinch.com` | **PARTIAL**: exact provider-to-parent event transport, ownership and success callback are unverified. |
+
+### Form and Duplicate Acceptance Still Required
+
+| Item | Current result | Status |
+|----|----|----|
+| `form_start` implementation | Initial GA4 Admin evidence shows enhanced form measurement enabled and historical `form_start`; current manual tags are inaccessible. Appointment-page content was unavailable, so no genuine safe field interaction completed | **PARTIAL** |
+| Automatic/manual form duplication | Neither live first-interaction behavior nor manual overlap could be inspected; no manual event was added | **NOT TESTABLE** |
+| `form_id` / form URL | `form_id = consultation_request` remains the proposed GA4-1 analytics code; no emitted form value or form-start `page_location` verified | **NOT TESTABLE** |
+| Successful-request mechanism | Greyfinch provider boundary observed; no accepted-state confirmation page, AJAX response, DOM success message, callback or dataLayer contract inspected | **PARTIAL** for provider identification; exact success mechanism **NOT TESTABLE** |
+| Safe `generate_lead` validation | No approved isolated provider test or accepted-state callback available. **Implementation requires website/form-provider support or an approved test submission mechanism.** Required dependency: owner-supported accepted-request signal for this embedded flow, stable form mapping, same-session context, and once-only handling of repeated acceptance notifications | **NOT TESTABLE** |
+| Existing `form_submit` / `ads_conversion_Book_appointment_1` | Historical names recorded in the initial inventory; current trigger, parameters, success semantics and duplicate behavior remain inaccessible. Neither is reused as `generate_lead` | **PARTIAL** for inventory only |
+| Homepage / request page duplicate QA | Existing two-page sample: two expected-destination views; secondary destination also has two views. No comprehensive repeat/reload/back test completed | **PARTIAL** |
+| Smile Arc service page duplicate QA | No new measured page-load, navigation or back test completed in this follow-up; initial certificate-blocked attempt is retained below | **NOT TESTABLE** |
+
+### Current Issues and Change Register
+
+| Issue | Precise current finding / action | Current status |
+|----|----|----|
+| QA-01 | `www` navigation previously worked; browser inspection still times out and screenshots/DOM views return blank or outdated content. No reliable three-page retest | **Partially resolved** |
+| QA-02 | Full Accounts list lacks client containers; explicit `GTM-KRNXX9TF` access denial prevents tag/trigger inspection or workspace repairs | **Unresolved** |
+| QA-03 | Earlier hero action had no planned CTA hit in the inspected stream. Exact reason unknown because tag existence, trigger conditions and click variables are inaccessible; no fix prepared | **Unresolved** |
+| QA-04 | Ads-named key-event trigger and accepted-request semantics remain unknown | **Unresolved** |
+| QA-05 | Selected earlier page-view values observed; fresh CTA/form/engagement parameter screenshots, GA4 arrival and comprehensive duplicate QA remain missing | **Partially resolved** |
+| QA-06 | Additional live GA4 destination now confirmed to send page views; ownership and canonical destination mapping still unapproved | **Unresolved** |
+| QA-07 / QA-08 | Historical QA referral contamination and absent BigQuery link were not re-tested | **Unresolved** |
+
+**Every GTM workspace change made: none. Unpublished proposed workspace changes: none.** No tracking configuration was saved, submitted or published. Only this documentation was updated. A production fix is not implied.
+
+**Remaining high risk:** Successful form submission tracking depends on the form provider/website success callback and remains unvalidated. The owner must expose an approved accepted-request signal and safe test mechanism, then validate matching `form_id`, `lead_type = consultation_request`, sanitized URL/session context and callback/reload deduplication. Until that is done, inquiry-rate and attribution analysis must not use these unverified events as trusted business outcomes.
 
 No GTM publication, GA4 setting change, website edit, BigQuery activation, or form submission was performed. No patient or synthetic inquiry was created. The 16 figures below were captured during the initial 9:45–9:58 p.m. QA window. The later retest has separately labeled accessibility-text observations; no blank retest capture is presented as proof. Demo-property screenshots were not used.
 
@@ -222,7 +281,7 @@ No PII was apparent in the displayed path/title sample. **That limited observati
 
 # Deliverable 2 — Issues Log (Initial Findings)
 
-These are the initial QA problems or acceptance gaps. Current retest status changes are explicitly recorded in the Live Retest section above; the original rows remain as a traceable baseline. Suspected causes are hypotheses, not verified configuration defects. No issue is marked fully resolved without complete acceptance evidence.
+These are the initial QA problems or acceptance gaps. Current retest status changes are explicitly recorded in the Follow-up Diagnosis and Live Retest sections above; the original rows remain as a traceable baseline. Suspected causes are hypotheses, not verified configuration defects. No issue is marked fully resolved without complete acceptance evidence.
 
 | ID | Issue | Detected in | Severity | Evidence | Suspected cause | Action/fix attempted | Status |
 |----|----|----|----|----|----|----|----|
