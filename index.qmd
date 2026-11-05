@@ -1,0 +1,12 @@
+---
+title: "PhD Orthodontics — GA4 Milestones"
+subtitle: "IBM 6500 · Group 6"
+format:
+  html:
+    embed-resources: true
+---
+
+- [GA4-1: GP Analytics Blueprint](ga4-1-analytics-blueprint.html) — measurement plan, KPI tree, event map and proposed validation cases.
+- [GA4-2: Tracking QA Log](ga4-2-tracking-qa-log.html) — November 4, 2026 QA evidence, issues and mitigation plan. Overall status: **PARTIAL; live collection acceptance blocked**.
+
+[GitHub repository](https://github.com/hanamai111/ga4-analytics-blueprint-phd-orthodontics)

@@ -2,14 +2,14 @@
 
 IBM 6500 | Group 6 | PhD Orthodontics
 
-Shared Quarto infrastructure for one HTML report containing the four assigned deliverables.
+Shared Quarto infrastructure for the GA4 milestone series. GA4-1 preserves its four assigned deliverables; GA4-2 adds tracking QA evidence, issues and risks.
 
 ## Files and rendering
 
 - Main report: `ga4-1-analytics-blueprint.qmd`
 - RStudio project: `GA4-1-GP-Analytics-Blueprint.Rproj`
 - Render: `quarto render` (or the RStudio Render button).
-- Output: `docs/ga4-1-analytics-blueprint.html`; `docs/index.html` redirects to the report.
+- Output: `docs/ga4-1-analytics-blueprint.html`; `docs/index.html` links to both milestones.
 - Publication: GitHub Pages from `main`  `/docs`.
 - Track completed work in `CONTRIBUTIONS.md`.
 
@@ -38,3 +38,13 @@ Final integration: reviewed 2026-10-11.
 Repository: https://github.com/hanamai111/ga4-analytics-blueprint-phd-orthodontics
 
 Published report: https://hanamai111.github.io/ga4-analytics-blueprint-phd-orthodontics/
+
+## GA4-2 Tracking QA Log
+
+- Source: `ga4-2-tracking-qa-log.qmd`
+- HTML: `docs/ga4-2-tracking-qa-log.html`
+- Evidence: `images/ga4-2/` (16 screenshots captured November 4, 2026)
+- Status: PARTIAL; fresh collection/parameter/duplicate validation remains blocked. See the report for exact limitations.
+- Render only this report: `quarto render ga4-2-tracking-qa-log.qmd`
+- Published page: https://hanamai111.github.io/ga4-analytics-blueprint-phd-orthodontics/ga4-2-tracking-qa-log.html
+- No production tracking changes or Canvas submission performed.

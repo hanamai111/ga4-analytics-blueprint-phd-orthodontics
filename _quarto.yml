@@ -3,4 +3,5 @@ project:
   output-dir: docs
   render:
     - ga4-1-analytics-blueprint.qmd
-
+    - ga4-2-tracking-qa-log.qmd
+    - index.qmd
