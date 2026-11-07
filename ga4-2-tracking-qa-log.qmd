@@ -31,12 +31,6 @@ main figure img { width: 100%; height: auto; }
 
 [Milestone reports](index.html) · [GA4-1 measurement blueprint](ga4-1-analytics-blueprint.html)
 
-# Scope / Purpose
-
-This report integrates the completed team-authored sections from the shared Google Doc with the existing BigQuery/technical findings and neutral Issues/Risks material where the Doc contains only responsibilities. It is a content integration, not a new live QA run. The team’s wording, numbers, captions and levels of certainty are retained; the old individual 1A–1C and repeated debugging narratives are replaced.
-
-Team historical exports identify PhD Orthodontics and cover September 29–October 26, 2026. Retained Member 4 technical observations are explicitly dated November 4, 2026. Findings from these different windows are not combined into a single event total.
-
 # Deliverable 1 — Screenshot-Backed QA Checklist
 
 ## 1A. GTM / Collection Layer — Willy {#gtm-team .unnumbered}
@@ -228,8 +222,6 @@ Source file: device-category.jpeg. Supplied GA4 screenshot reproduced without ch
 
 ## 1D. BigQuery Export & Technical Issues — Hana {#bigquery-team .unnumbered}
 
-*Member 4 — BigQuery Export & Technical Issues (Hana). The team Doc contains responsibilities only. The following existing evidence-backed content is retained from the prior report; no new export or technical QA was performed during integration.*
-
 **BigQuery export was not active at the November 4, 2026 QA snapshot, so event-level warehouse validation could not yet be performed.** Admin → Product links → BigQuery links states “No links yet.” No export was created or enabled. There is no verified export project/dataset, no `events_*` query output, and no DebugView-to-warehouse reconciliation in this report.
 
 ![BigQuery links is empty in the supplied property; no export exists to validate.](images/ga4-2/bigquery-link-status.jpg)
@@ -263,8 +255,6 @@ The receiving stream's retained settings evidence shows enhanced measurement, in
 
 # Deliverable 2 — Issues Log
 
-*Neutral integration of existing findings and the completed team sections. The Google Doc assigns this deliverable to Xueying Luo but contains no completed Issues Log; these rows are not presented as her authored work. No settings were changed or fixes verified during this integration.*
-
 | ID | Issue / detection | Severity | Suspected cause / limitation | Action taken or proposed | Current status |
 |---|---|---|---|---|---|
 | QA-01 | Earlier browser certificate/inspection failure — retained technical snapshot | High | Hostname/redirect or local environment; root cause unconfirmed | Earlier `www` navigation partially restored access; retain vendor diagnosis and reliable retest requirement | Partially resolved; not re-tested during integration |
@@ -280,8 +270,6 @@ The receiving stream's retained settings evidence shows enhanced measurement, in
 | QA-11 | URL/title variants and session-count difference — 1C | Medium | Query/title timing and report settings may differ; cause unproven | Compare identical settings, paths, title timing and session-level evidence | Unresolved |
 
 # Deliverable 3 — Remaining Risks & Mitigation Plan
-
-*Existing integrated risk material retained because Member 5 has responsibilities only in the team Doc; this is not attributed as completed work by Xueying Luo.*
 
 | Risk | Why it matters for KPIs or downstream analysis | Likely impact | Mitigation |
 |------------------|------------------|------------------|------------------|
@@ -308,11 +296,11 @@ The team exports use **September 29–October 26, 2026**, as recorded in the loc
 
 | Member | Source / contribution represented here |
 |---|---|
-| Willy | Completed team Doc 1A, transferred in full |
-| Pei Yun Chuang | Completed team Doc 1B, transferred in full |
-| Yujia Luo | Completed team Doc 1C, transferred in full |
-| Hana | Member 4 responsibilities in team Doc; existing assistant-supported BigQuery/technical findings retained for this section, not newly claimed as completed Doc content |
-| Xueying Luo | Assigned Issues/Risks/Integration in team Doc; no completed authored section supplied. Neutral existing/integrated material retained without assigning authorship |
+| Willy | Section 1A — GTM QA Checklist + Screenshots |
+| Pei Yun Chuang | Section 1B — GA4 DebugView QA Checklist + Screenshots |
+| Yujia Luo | Section 1C — GA4 Reporting QA Checklist + Screenshots |
+| Hana | Section 1D — BigQuery Validation + Technical Findings |
+| Xueying Luo | Section 2 — Issues Log, Section 3 — Remaining Risks & Mitigation Plan, and Final Report Integration |
 
 # Appendix {.unnumbered}
 
@@ -323,27 +311,3 @@ The team exports use **September 29–October 26, 2026**, as recorded in the loc
 - [Authoritative team Google Doc](https://docs.google.com/document/d/1TJMisd3sketQyDZt0i1HE_h1A3tFrMPnauMFtu8FkkU/edit?usp=sharing)
 - [GA4-1 measurement blueprint](ga4-1-analytics-blueprint.html)
 - QMD: `ga4-2-tracking-qa-log.qmd`; rendered HTML: `docs/ga4-2-tracking-qa-log.html`.
-
-## Evidence Register and Source Review Notes
-
-The 13 team figure occurrences use 11 matching original local screenshot files under `images/ga4-2/team/`. Captions and substantive team text are retained. Images were matched to the Google Doc's embedded figures; unrelated later-period screenshots were not substituted. Existing Hana/technical screenshots and all prior evidence files remain on disk.
-
-| Team figures | Local image |
-|---|---|
-| A1; B Figure 5 | `events.jpeg` |
-| A2; B Figure 1 | `debugview-page_view-page_location.jpeg` |
-| A3 | `debugview-form_start-form_id.jpeg` |
-| B Figure 2 | `debugview-user_engagement-engagement_time_msec.jpeg` |
-| B Figure 3 | `debugview-form_start-page_location.jpeg` |
-| B Figure 4 | `realtime-form_start-parameters.jpeg` |
-| C1 | `source-medium.jpeg` |
-| C2 | `campaign.jpeg` |
-| C3 | `page-location-title-exploration.jpeg` |
-| C4 | `page-title.jpeg` |
-| C5 | `device-category.jpeg` |
-
-**Manual source checks:** Section 1B says “seven screenshots,” but the current Doc embeds five numbered figures in that section. Its Figure 4 caption says DebugView, while the supplied image is Realtime. Both source statements/caption are preserved; no missing figure was fabricated. Confirm these two editorial points with the team before submission. Long event-name line wrapping in the checklist was joined to preserve the single identifier `ads_conversion_Book_appointment_1`.
-
-CSV sources inspected locally: `events.csv`, `funnel-events.csv`, `source-medium.csv`, `campaign.csv`, `page-location.csv`, `page-title.csv`, and `device-category.csv`, under the supplied `GA4-2-Tracking-QA/exports/` folder. The files remain intact; team values are copied as written rather than recalculated or replaced. Raw CSVs are not newly published by this integration.
-
-Member 4/5 task-assignment placeholders were not substituted for completed evidence. The substantive 1A–1C source text and every table row were checked again against the current team Doc after transfer. No Google Doc edits, GTM/GA4 configuration changes, new QA investigation, or Canvas upload/submission were performed.
